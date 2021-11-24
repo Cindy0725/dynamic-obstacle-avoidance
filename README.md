@@ -68,3 +68,6 @@ We train 100000 timesteps for each algorithm.
 There are two criteria to assess the performance of the reinforcement learning algorithms: 
 - Number of steps used to reach the goal per episode 
 - Number of collisions per episode
+
+We run 50 episodes for each algorithm. Since the agent is expected to arrive at the goal within 100 steps, we set the maximum timestep to 100 for each episode. 
+
