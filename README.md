@@ -70,4 +70,4 @@ There are two criteria to assess the performance of the reinforcement learning a
 - Number of collisions per episode
 
 We run 50 episodes for each algorithm. Since the agent is expected to arrive at the goal within 100 steps, we set the maximum timestep to 100 for each episode. 
-
+\[](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/steps_performance.png)
