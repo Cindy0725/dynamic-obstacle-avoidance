@@ -7,7 +7,7 @@
 - [Evaluation & Comparison](#evaluation-and-comparison)
 
 # Introduction 
-The objective of this project is to train a robot to avoid dynamic obstacles and arrive at a moving goal in a simulation environment. We train the robot with six deep reinforcement learning algorithms in stable-baselines 3: PPO, A2C, HER, SAC, DDPG, TD3, TQC, and compare their performance on avoiding moving obstacles. 
+The objective of this project is to train a robot to avoid dynamic obstacles and arrive at a moving goal in a simulation environment. We train the robot with four deep reinforcement learning algorithms in stable-baselines 3: PPO, A2C, SAC, TQC, and compare their performance on avoiding moving obstacles. 
 
 # Simple-playgrounds
 Our dynamic obstacle avoidance environment is implemented based on *Simple-Playgrounds* (SPG) software library: https://github.com/mgarciaortiz/simple-playgrounds.  *Simple-Playgrounds* (SPG) is an easy-to-use, fast and flexible simulation environment for research in Deep Reinforcement Learning. It bridges the gap between simple and efficient grid environments, and complex and challenging 3D environments.  
@@ -30,11 +30,11 @@ The touch sensor has 36 number of rays and 360 degrees field of view. It is used
 
 Our agent starts from position (50, 50). 
 ### Obstacle
-Our obstacle starts from position (110, 60). It moves around following trajectory 1 or trajectory 2.  
+For each episode, our obstacle starts from a random position on the straight line between (110, 55) and (110, 180). Then it moves around following trajectory 1 or trajectory 2. 
 Trajectory 1: It repeatedly moves in a straight line between position (110, 55) and position (110, 145).   
 Trajectory 2: It starts from position (110, 60) and repeatedly moves along an elliptical trajectory. 
 ### Goal
-Our goal can also move in the playground. It repeatedly moves along a straight line between position (95, 185) and position (255, 185). 
+Our goal can also move in the playground. It repeatedly moves along a straight line between position (220, 55) and position (220, 180). For each episode, our goal also starts from a random position on the straight line between (220, 55) and (220, 180).
 ## Action Space
 Our action space is continuous and it contains 3 variables:
 - Longitudinal force  
@@ -61,25 +61,37 @@ Reward shaping: we also minus the distance between our agent and the goal from t
 The episode will terminate if the agent arrives at the goal.
 
 # Training with Deep RL algorithms
-We train our agent with 6 deep reinforcement learning algorithms from *Stable-Baselines3*: https://github.com/DLR-RM/stable-baselines3. The algorithms are: PPO, A2C, HER, SAC, DDPG, TD3, TQC. 
+We train our agent with 4 deep reinforcement learning algorithms from *Stable-Baselines3*: https://github.com/DLR-RM/stable-baselines3. The algorithms are: PPO, A2C, SAC, TQC. 
 We train 100000 timesteps for each algorithm. 
 
 # Evaluation and Comparison
-## Learning Curve
-When training the algorithms, we check the mean reward per episode every 1000 steps. The learning curves of these algorithms are as following:
+## Learning Speed
+When training the algorithms, we check the mean reward per episode every 1000 steps. The smoothed learning curves of these algorithms are as following:
 
 ![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/learning_curve_comparison.png)
-![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/A2C.png)
 
+According to the figures, the mean reward per episode keeps increasing in general for PPO, SAC and TQC, and TQC learns fastest.
+
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/A2C_2.png)
+
+However, A2C can't converge to a satifying reward after 100000 timesteps. Its mean reward per episode even decreases as the number of timesteps increases.
+
+## Performance
 There are two criteria to assess the performance of the reinforcement learning algorithms: 
 - Number of steps used to reach the goal per episode 
 - Number of collisions per episode  
 
 We run 50 episodes for each algorithm. Since the agent is expected to arrive at the goal within 100 steps, we set the maximum timestep to 100 for each episode.
 
-![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/steps_performance.png)
-![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/collisions_performance.png)
+****
+	
+|Algorithm|Mean #steps per episode|Mean #collisions per episode|
+|---|---|---
+|PPO|58.82|0.14
+|A2C|>>100|2.48
+|SAC|30.66|0.02
+|TQC|35.04|0.00
 
-From the figure, we can see that PPO, SAC and A2C all performs well in avoiding collisions. However, A2C can not arrive at the goal since it almost stays in the same position as time goes. PPO, SAC and TQC can arrive at the goal within 30 steps but sometimes TQC collides with the obstacle. Therefore, PPO performs the best since it reaches the goal within 22 steps and it doesn't collide with obstacles at all. 
+****
 
-
+From the table, we can see that SAC and TQC performs well on both avoiding dynamic obstacles and reaching a moving goal. However, A2C can not arrive at the goal since it almost stays in the same position as time goes. PPO learns slower and performs worse than SAC and TQC.
