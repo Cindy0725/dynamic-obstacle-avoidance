@@ -68,7 +68,8 @@ We train 100000 timesteps for each algorithm.
 ## Learning Curve
 When training the algorithms, we check the mean reward per episode every 1000 steps. The learning curves of these algorithms are as following:
 
-
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/learning_curve_comparison.png)
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/A2C.png)
 
 There are two criteria to assess the performance of the reinforcement learning algorithms: 
 - Number of steps used to reach the goal per episode 
