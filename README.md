@@ -69,5 +69,9 @@ There are two criteria to assess the performance of the reinforcement learning a
 - Number of steps used to reach the goal per episode 
 - Number of collisions per episode
 
-We run 50 episodes for each algorithm. Since the agent is expected to arrive at the goal within 100 steps, we set the maximum timestep to 100 for each episode. 
-\[](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/steps_performance.png)
+We run 50 episodes for each algorithm. Since the agent is expected to arrive at the goal within 100 steps, we set the maximum timestep to 100 for each episode.
+
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/steps_performance.png)
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/collisions_performance.png)
+
+From the figure, we can see that PPO, SAC and A2C all performs well in avoiding collisions. However, A2C can not arrive at the goal since it almost stays in the same position as time goes. PPO, SAC and TQC can arrive at the goal within 30 steps but sometimes TQC collides with the obstacle. Therefore, PPO performs the best since it reaches the goal within 22 steps and it doesn't collide with obstacles at all. 
