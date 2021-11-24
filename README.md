@@ -65,9 +65,14 @@ We train our agent with 6 deep reinforcement learning algorithms from *Stable-Ba
 We train 100000 timesteps for each algorithm. 
 
 # Evaluation and Comparison
+## Learning Curve
+When training the algorithms, we check the mean reward per episode every 1000 steps. The learning curves of these algorithms are as following:
+
+
+
 There are two criteria to assess the performance of the reinforcement learning algorithms: 
 - Number of steps used to reach the goal per episode 
-- Number of collisions per episode
+- Number of collisions per episode  
 
 We run 50 episodes for each algorithm. Since the agent is expected to arrive at the goal within 100 steps, we set the maximum timestep to 100 for each episode.
 
@@ -75,4 +80,5 @@ We run 50 episodes for each algorithm. Since the agent is expected to arrive at 
 ![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/collisions_performance.png)
 
 From the figure, we can see that PPO, SAC and A2C all performs well in avoiding collisions. However, A2C can not arrive at the goal since it almost stays in the same position as time goes. PPO, SAC and TQC can arrive at the goal within 30 steps but sometimes TQC collides with the obstacle. Therefore, PPO performs the best since it reaches the goal within 22 steps and it doesn't collide with obstacles at all. 
+
 
