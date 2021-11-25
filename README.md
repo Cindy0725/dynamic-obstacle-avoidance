@@ -68,11 +68,11 @@ We train 100000 timesteps for each algorithm.
 ## Learning Speed
 When training the algorithms, we check the mean reward per episode every 1000 steps. The smoothed learning curves of these algorithms are as following:
 
-![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/learning_curve_comparison.png)
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/imgs/learning_curve_comparison.png)
 
 According to the figures, the mean reward per episode keeps increasing in general for PPO, SAC and TQC, and TQC learns fastest.
 
-![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/A2C_2.png)
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/imgs/A2C_2.png)
 
 However, A2C can't converge to a satifying reward after 100000 timesteps. Its mean reward per episode even decreases as the number of timesteps increases.
 
