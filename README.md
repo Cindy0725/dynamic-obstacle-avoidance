@@ -5,6 +5,7 @@
 - [Elements of the environment](#elements-of-the-environment)
 - [Training with Deep RL algorithms](#training-with-deep-rl-algorithms)
 - [Evaluation & Comparison](#evaluation-and-comparison)
+- [Programming](#programming)
 
 # Introduction 
 The objective of this project is to train a robot to avoid dynamic obstacles and arrive at a moving goal in a simulation environment. We train the robot with four deep reinforcement learning algorithms in stable-baselines 3: PPO, A2C, SAC, TQC, and compare their performance on avoiding moving obstacles. 
@@ -95,3 +96,32 @@ We run 50 episodes for each algorithm. Since the agent is expected to arrive at 
 ****
 
 From the table, we can see that SAC and TQC performs well on both avoiding dynamic obstacles and reaching a moving goal. However, A2C can not arrive at the goal since it almost stays in the same position as time goes. PPO learns slower and performs worse than SAC and TQC.
+
+# Programming 
+### directory *models*
+In *models* directory, there are four models trained by SAC, TQC, PPO and A2C (timesteps = 100000). Their performances are shown in the Evaluation & Comparison section.
+### file *solution.py* (testing)
+*solution.py* create an environment with one agent, one moving obstacle and one moving goal. It loads model from *models directory*. Now running *solution.py* will display how the agent moves after training by TQC. It will also output the mean number of steps per episode and the mean number of collisions per episode in the console. If you want to see other models' performance, just modify the following line at the end of the file:
+
+```python
+model = TQC.load("models/tqc")
+```
+
+### file *train.py* (training)
+*train.py* is used to train different models. Running *train.py* will train a model by SAC algorithm and save it to *models directory*. If you want to train models by PPO, TQC or A2C, just modify the following lines at the end of the file:
+
+```python
+model = SAC("MlpPolicy", env, verbose=1)
+model.learn(total_timesteps=100000, log_interval=4)
+model.save("models/sac")
+```
+
+Please also remember to comment the following lines in *dynamic_obstacle_avoidance.py* since displaying the agent's performance while training is very time consuming. 
+
+```python
+plt_image(eng.generate_playground_image())		       #line 66
+plt_image(eng.generate_agent_image(eng.agents[0]))	       #line 67
+
+cv2.imshow('agent', eng.generate_agent_image(eng.agents[0]))   #line 97
+cv2.waitKey(20)						       #line 98
+```
