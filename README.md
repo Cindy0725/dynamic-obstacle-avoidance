@@ -18,24 +18,27 @@ The playgrounds are 2D environments where agents can move around and interact wi
 ## Playground
 Our agent move and perceive in a playground. A playground is described using a Cartesian coordinate system. Each element in the playground has a position (x,y, &theta), with x along the horizontal axis, y along the vertical axis, and theta the orientation, aligned on the horizontal axis. For example, the top left corner has position (0, 0).  
 A playground has a size (width, length), with the width along x-axis, and length along y-axis.  
-We created a playground with size (200, 300). 
+We created a playground with size (800, 500). 
+
+![image](https://github.com/Cindy0725/dynamic-obstacle-avoidance/blob/main/imgs/environment.png)
 
 ## Agent, Obstacle and Goal
 ### Agent
 In *Simple-Playgrounds*, our agent is a Base agent with a controller which can manage the actuators of the agent. We use an External controller to set actions of the agent from outside of the simulators (using reinforcemnt learning algorithms). 
 Our agent perceive the surroudings with two sensors:
 - Lidar Sensor  
-The lidar sensor has 64 number of rays and 180 degrees field of view. Our agent use it to detect obstacles. 
+The lidar sensor has 180 number of rays and 180 degrees field of view. Our agent use it to detect obstacles. 
 - Touch Sensor  
-The touch sensor has 36 number of rays and 360 degrees field of view. It is used to check whether our agent collides with the moving obstacle or the wall of our playground.  
+The touch sensor has 64 number of rays and 360 degrees field of view. It is used to check whether our agent collides with the moving obstacle or the wall of our playground.  
 
 Our agent starts from position (50, 50). 
-### Obstacle
-For each episode, our obstacle starts from a random position on the straight line between (110, 55) and (110, 180). Then it moves around following trajectory 1 or trajectory 2. 
-Trajectory 1: It repeatedly moves in a straight line between position (110, 55) and position (110, 145).   
-Trajectory 2: It starts from position (110, 60) and repeatedly moves along an elliptical trajectory. 
+### Obstacles
+- Obstacle 1: For each episode, our obstacle starts from a random position on the straight line between (130, 80) and (130, 250). It repeatedly moves in a straight line between position (130, 80) and position (130, 250) with longitudinal force = 0.2.        
+- Obstacle 2: For each episode, our obstacle starts from a random position on the straight line between (350, 250) and (350, 340). It repeatedly moves in a straight line between position (350, 250) and position (350, 340) with longitudinal force = 0.2.
 ### Goal
-Our goal can also move in the playground. It repeatedly moves along a straight line between position (220, 55) and position (220, 180). For each episode, our goal also starts from a random position on the straight line between (220, 55) and (220, 180).
+Our goal can also move in the playground. It repeatedly moves along a straight line between position (750, 300) and position (750, 450). For each episode, our goal also starts from a random position on the straight line between (750, 300) and (750, 450) with longitudinal force = 0.2.
+### Wall
+There are several walls in this room. Our agent should also avoid colliding with the walls. 
 ## Action Space
 Our action space is continuous and it contains 3 variables:
 - Longitudinal force  
@@ -46,12 +49,14 @@ The rotation velocity is a float number in range [-1, 1]. The agent turns to rig
 The lateral force is a float number in range [-1, 1].
 
 ## State Space
-Our state space is continuous with 66 variables:
+Our state space is continuous with 362 variables:
 - theta   
 theta is the angle between our agent and the goal. It is normalized to [-1, 1].
 - dist    
 dist is the distance between our agent and the goal. It is normalized to [0, 1]. It is used to check whether our agent arrives at the goal.
-- 64 lidar sensor values      
+- 180 lidar sensor values in current timestep       
+The sensor values are normalized to [0, 1].
+- 180 lidar sensor values in previous timestep	   
 The sensor values are normalized to [0, 1].
 
 ## Reward
